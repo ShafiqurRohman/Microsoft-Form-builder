@@ -16,10 +16,11 @@ var questionIndex = 0;
 
 // console.log(header, normView, inputView);
 
+const others = document.querySelector('#others');
 
 window.addEventListener('click', (e)=>{
-    if(e.target != header) {
-        header.classList.remove('active')
+        if(e.target != header) {
+        header.classList.remove('active');
         if(iTitle.value == ''){
             pTitle.textContent = 'Untitled Form'
         }
@@ -44,8 +45,7 @@ const addButton = document.querySelector('div.adding-button');
 const just_text = document.querySelector('div.adding-button .just-text');
 
 addButton.addEventListener('click', ()=>{
-    addButton.classList.toggle('active');
-    
+    addButton.classList.toggle('active');  
 })
 
 const questionArea = document.querySelector('.each-question');
@@ -56,11 +56,16 @@ questionOption.addEventListener('click', ()=>{
     //newQuestion.classList.add('questionOption');
     newQuestion.innerHTML = `
     <div id="question-${questionIndex}" class="question-div">
+    <div class="place-change">
+    <span class="material-symbols-outlined iconSize">content_copy</span>
+    <span id="delete-${questionIndex}"  class="material-symbols-outlined iconSize">delete</span>
+    <span class="material-symbols-outlined iconSize">arrow_downward</span>
+    <span class="material-symbols-outlined iconSize">arrow_upward</span>
+    </div>
     <div class="question-header">
         <div class="question-title">
-            <span style="font-size:15;margin-top:5px;"> ${questionIndex+1}. </span>
+            <span class="number-size"> ${questionIndex+1}. </span>
             <input type="text" placeholder="Untitled Question ${questionIndex+1}">
-            <img id ="delete-${questionIndex}" src="https://img.icons8.com/material-rounded/30/null/filled-trash.png"/>
         </div>
     </div>
     <div class="question-body">
@@ -73,16 +78,29 @@ questionOption.addEventListener('click', ()=>{
                 <input class="option-radio" type="radio">
                 <input class="option-input" type="text" placeholder="Option-2">
             </div>
+        </div>
+
+        <div class="extra-option">
             <div class="option">
-                <input class="option-radio" type="radio">
-                <input class="option-input" type="text" placeholder="Option-3">
+               <span> + add option </span>
             </div>
             <div class="option">
-                <input class="option-radio" type="radio">
-                <input class="option-input" type="text" placeholder="option-3">
+                <span> add "other" option </span>
             </div>
         </div>
+
     </div>
+    <div class="extra-functon">
+        <div class="option">
+            <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Multile answer
+        </div>
+        <div class="option">
+        <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
+        </div>
+        <div class="option">
+        <span class="material-symbols-outlined">more_horiz</span> 
+        </div>
+        </div>
     </div>
     `
     questionArea.appendChild(newQuestion);
@@ -101,19 +119,34 @@ questionText.addEventListener('click', ()=>{
     //newQuestion.classList.add('questionOption');
     newQuestion.innerHTML = `
     <div id="question-${questionIndex}" class="question-div">
+    <div class="place-change">
+    <span class="material-symbols-outlined iconSize">content_copy</span>
+    <span id="delete-${questionIndex}"  class="material-symbols-outlined iconSize">delete</span>
+    <span class="material-symbols-outlined iconSize">arrow_downward</span>
+    <span class="material-symbols-outlined iconSize">arrow_upward</span>
+    </div>
     <div class="question-header">
         <div class="question-title">
-       <span> ${questionIndex+1}. </span><input type="text" placeholder="Untitled Question ${questionIndex+1}">
-            <img id ="delete-${questionIndex}" src="https://img.icons8.com/material-rounded/30/null/filled-trash.png"/>
+            <span class="number-size"> ${questionIndex+1}. </span>
+            <input type="text" placeholder="Untitled Question ${questionIndex+1}">
         </div>
     </div>
+
     <div class="question-body">
-        <div class="question-options">
-            <div  style="padding-left:10px;" class="option">
-                <textarea class="text-input" type="text" placeholder="Enter you ans here"></textarea>
-            </div>
-        </div>
+        <input class="text-input" type="text" placeholder="Enter your answer">
     </div>
+
+    <div class="extra-functon">
+        <div class="option">
+            <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Long answer
+        </div>
+        <div class="option">
+        <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
+        </div>
+        <div class="option">
+        <span class="material-symbols-outlined">more_horiz</span> 
+        </div>
+        </div>
     </div>
     `
     questionArea.appendChild(newQuestion);
@@ -130,17 +163,31 @@ questionDate.addEventListener('click', ()=>{
     const newQuestion = document.createElement('div');
     newQuestion.innerHTML = `
     <div id="question-${questionIndex}" class="question-div">
+    <div class="place-change">
+    <span class="material-symbols-outlined iconSize">content_copy</span>
+    <span id="delete-${questionIndex}"  class="material-symbols-outlined iconSize">delete</span>
+    <span class="material-symbols-outlined iconSize">arrow_downward</span>
+    <span class="material-symbols-outlined iconSize">arrow_upward</span>
+    </div>
     <div class="question-header">
         <div class="question-title">
-         <span> ${questionIndex+1}. </span><input type="text" placeholder="Untitled Question ${questionIndex+1}">
-            <img id ="delete-${questionIndex}" src="https://img.icons8.com/material-rounded/30/null/filled-trash.png"/>
+            <span class="number-size"> ${questionIndex+1}. </span>
+            <input type="text" placeholder="Untitled Question ${questionIndex+1}">
         </div>
-        <div class="question-body">
-            <div class="question-options">
-                <div style="padding-left:10px;" class="option">
-                    <input class="option-time" type="date">
-                </div>
-            </div>
+    </div>
+
+    <div class="question-body">
+        <input class="option-time" type="date" placeholder="Enter your answer">
+    </div>
+
+    <div class="extra-functon">
+        <div class="option">
+            <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
+        </div>
+        <div class="option">
+            <span class="material-symbols-outlined">more_horiz</span> 
+        </div>
+        </div>
     </div>
     `
     questionArea.appendChild(newQuestion);
@@ -152,9 +199,76 @@ questionDate.addEventListener('click', ()=>{
 });
 
 
-const imageWrapper = document.querySelector('.image-wrapper');
+const questionRating = document.querySelector('.add-rating');
 
-imageWrapper.addEventListener('click', () => {
-  const dropdownMenu = imageWrapper.querySelector('.dropdown-menu');
-  dropdownMenu.classList.toggle('show');
+questionRating.addEventListener('click', () => {
+    const newQuestion = document.createElement('div');
+    newQuestion.innerHTML = `
+    <div id="question-${questionIndex}" class="question-div">
+    <div class="place-change">
+    <span class="material-symbols-outlined iconSize">content_copy</span>
+    <span id="delete-${questionIndex}"  class="material-symbols-outlined iconSize">delete</span>
+    <span class="material-symbols-outlined iconSize">arrow_downward</span>
+    <span class="material-symbols-outlined iconSize">arrow_upward</span>
+    </div>
+    <div class="question-header">
+        <div class="question-title">
+            <span class="number-size"> ${questionIndex+1}. </span>
+            <input type="text" placeholder="Untitled Question ${questionIndex+1}">
+        </div>
+    </div>
+
+    <div class="rating-body">
+        <span class="material-symbols-outlined star">star</span>
+        <span class="material-symbols-outlined star">star</span>
+        <span class="material-symbols-outlined star">star</span>
+        <span class="material-symbols-outlined star">star</span>
+        <span class="material-symbols-outlined star">star</span>
+    </div>
+
+    <div class="rating-functon">
+        <div class="drop-down">
+            <span class="rating-function-text">Label :</span> 
+            <select class="section-div" name="label" id="label">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <div class="drop-down">
+            <span class="rating-function-text">Symbol : </span>
+            <select class="section-div" name="label" id="label">
+            <option value="1">Star</option>
+            <option value="2">Heart</option>
+            <option value="3">Like</option>
+            <option value="4">Love</option>
+        </select>
+        </div>
+
+    </div>
+
+    <div class="extra-functon">
+        <div class="option">
+        <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
+        </div>
+        <div class="option">
+        <span class="material-symbols-outlined">more_horiz</span> 
+        </div>
+    </div>
+</div>
+    `
+    questionArea.appendChild(newQuestion);
+    const index = questionIndex;
+    document.getElementById(`delete-${index}`).addEventListener('click', ()=>{
+        document.getElementById(`question-${index}`).remove();
+    })
+    questionIndex++;
+});
+
+
+const otherButton = document.querySelector('.other-button');
+otherButton.addEventListener('click', ()=>{   
+    console.log(others.style.display = 'block');
 });

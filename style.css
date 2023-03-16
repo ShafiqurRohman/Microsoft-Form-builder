@@ -23,18 +23,21 @@ body {
     min-height: 900px;
     padding: 30px;
 }
-
+/* for header section */
 
 .header {
     padding: 20px;
+    border-radius: 4px;
 }
+
 .header:hover {
-    background: rgba(37, 88, 30, 0.336);
-    
+    background: rgb(245, 245, 245);
 }
+
 .header .normal-view .title {
-    font-size: 50px;
+    font-size: 40px;
 }
+
 .header .normal-view .description {
     font-size: 18px;
     color: rgb(53, 52, 52);
@@ -46,6 +49,7 @@ body {
 }
 .header.active .normal-view {
     display: none;
+    background: none;
 }
 
 .header .input-section {
@@ -54,6 +58,9 @@ body {
 .header.active .input-section {
     display: block;
 }
+.header.active{
+    background: rgb(245, 245, 245);
+}
 
 
 
@@ -61,7 +68,7 @@ body {
 .input-section #title,
 .input-section #description {
     display: block;
-    height: 40px;
+    height: 30px;
     width: 100%;
     padding: 5px;
     border: none;
@@ -71,16 +78,18 @@ body {
 
 
 .input-section #title:hover{
-    border-bottom: 2px solid green;
+    border-bottom: 2px solid rgb(3, 120, 124);;
 }
 .input-section #description:hover {
-    border-bottom: 2px solid green;
+    border-bottom: 2px solid rgb(3, 120, 124);;
 }
 
 .input-section #description {
     margin-top: 10px;
 }
 
+
+/* for adding button */
 
 div.adding-button {
     background: rgb(3, 120, 124);   ;
@@ -147,18 +156,48 @@ div.adding-button.active {
     cursor: pointer;
 }
 
+/* question section */
+
 .question-div {
-    font-size: 30px;
-    background-color: rgba(37, 88, 30, 0.336);
-    align-items: center;
-    margin: 10px 0;
-    padding: 5%;
+    background: rgb(245, 245, 245);
+    border-radius: 4px;
+    box-shadow: none;
+    margin-top: 20px;
+    padding-bottom: 0px;
+    border-top: 4px solid rgb(3, 120, 124);
+}
+  .place-change{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 1px;
+  }
+
+  .iconSize{
+    font-size: 23px;
+    cursor: pointer;
+    padding: 10px;
+    color: rgb(105, 93, 93);;
+
+  }
+  .number-size{
+    font-size:17px;
+    padding-top:15px;
+    font-weight:20px
+  }
+  
+
+.question-header{
+    padding-top: 10px;
+    padding-left: 40px;
 }
 .question-title input{
     font-size: 15px;
     margin-bottom: 5px;
     width: 90%;
-    height: 35px;
+    height: 30px;
     line-height: 50px;
     border:none;
     outline: none;
@@ -167,9 +206,21 @@ div.adding-button.active {
 }
 
 .question-title input:hover{
-    border-bottom: 1px solid green;
+    border-bottom: 2px solid rgb(3, 120, 124);
 }
 
+.question-body{
+   padding-left: 60px; 
+}
+
+.question-options{
+    padding: 10px;
+}
+.option{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
 .img-down{
     padding-top: 20px;
 }
@@ -196,7 +247,7 @@ div.adding-button.active {
 .option-radio{
     height: 20px;
     width: 20px;
-    padding: 5px;
+    margin-right: 10px;
 }
 
 .each-question{
@@ -206,44 +257,148 @@ div.adding-button.active {
     padding: 20px;
 }
 
+.extra-option{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    color: rgb(3, 120, 124);
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.extra-option-icon{
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+
+.extra-functon{
+    margin: 0px;
+    width: 100%;
+    padding-top: 14px;
+    box-sizing: border-box;
+    height: 56px;
+    border-top: 1px solid rgb(224, 224, 224);
+    display: flex;
+    justify-content: flex-end;
+    font-size: 17px;
+    color: rgb(102, 99, 99);
+}
+
 .text-input{
-    height: 30px;
-    width: 97%;
-    border-radius: 3px;
-    border:none;
-    outline: none;
-    padding: 5px;
+    padding: 6px 10px;
+    outline: 0px;
+    width: 92%;
+    font-size: 15px;
+    line-height: 20px;
+    color: rgb(189, 189, 189);
+    background-color: transparent;
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 4px;
+    cursor: not-allowed;
+    margin-top: 15px;
+    margin-bottom: 20px;
+
 }
 
 .option-time{
-    height: 30px;
-    width: 97%;
-    border-radius: 3px;
-    border:none;
-    outline: none;
-    padding: 5px;
+    padding: 6px 10px;
+    outline: 0px;
+    width: 92%;
+    font-size: 15px;
+    line-height: 20px;
+    color: rgb(189, 189, 189);
+    background-color: transparent;
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 4px;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 
-.image-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-menu {
+/* for rating */
+
+.rating-body{
+    padding: 20px 30px 30px 60px;
+}
+.star{
+    color: rgb(184 187 187);
+    cursor: pointer;
+    font-size: 40px;
+}
+
+.rating-functon{
+    display: flex;  
+    justify-content: flex-start;
+    margin-left: 8%;
+}
+
+.drop-down{
+    padding: 5px 5px;
+    width: 30%;
+    font-size: 15px;
+    line-height: 20px;
+    color: rgb(97, 93, 93);
+    background-color: transparent;
+    border:none;
+    border-radius: 4px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    margin-left:0px;
+}
+
+.section-div{
+    margin-top: 10px;
+    background: rgb(245, 245, 245);
+    border-radius: 1px;
+    box-shadow: none;
+    border: 1px solid rgb(165, 159, 159);
+    height: 30px;
+    width: 120px;
+}
+
+.rating-function-text{
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(88, 87, 87);
+}
+
+
+.section-div:hover{
+    border-bottom: 2px solid rgb(3, 120, 124);
+}
+
+.section-div{
+    outline: 0px;
+    border: 1px solid rgb(196, 192, 192);
+    border-radius: 4px;
+    background: white;
+}
+
+/* for others */
+#others{
+    width: 240px;
+    height: 200px; 
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;;
+    border-radius: 5px;
     display: none;
-    position: absolute;
-    z-index: 1;
-  }
-  
-  .image-wrapper:hover .dropdown-menu {
-    display: block;
-  }
-  
-  .dropdown-menu a {
-    display: block;
-    background-color: #fff;
-    color: #000;
-    text-decoration: none;
-    padding: 5px;
-  }
+}
+
+.other-display{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.others-option{
+    padding: 10px;
+    align-items: center;
+    color: rgb(3, 120, 124);
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 400;
+}
+.others-option:hover{
+    background: rgb(245, 245, 245);
+}

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Forms</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -21,8 +22,8 @@
                 </div>
 
                 <div class="input-section">
-                    <input type="text" id="title">
-                    <input type="text" id="description">
+                    <input type="text" id="title" placeholder="Enter the Form header">
+                    <input type="text" id="description" placeholder="Enter the description">
                 </div>
             </div>
 
@@ -30,6 +31,14 @@
                 <div class="each-question"></div>
             </div>
 
+            <div id="others">
+                <div class="other-display">
+                    <div class="others-option"><span class="material-symbols-outlined">swap_vert</span> Raking</div>
+                    <div class="others-option"><span class="material-symbols-outlined">view_list</span> Likert</div>
+                    <div class="others-option"><span class="material-symbols-outlined">wifi_proxy</span> Net Promoter Score</div>
+                    <div class="others-option"><span class="material-symbols-outlined">file_copy</span> Section</div>
+                </div>
+            </div>
 <!-- text, rating, date, dropDown -->
 
             <div class="adding-button">
@@ -41,7 +50,6 @@
                 <div class="just-text">
                     Add New
                 </div>
-                
                 <div class="hidden-buttons">
                     <div class="normBtn add-question">
                         <img src="https://img.icons8.com/external-flat-icons-inmotus-design/13/null/external-Radio-Button-mathematics-geometry-flat-icons-inmotus-design-2.png"/> Choice
@@ -49,7 +57,7 @@
                     <div class="normBtn add-text">
                         <img src="https://img.icons8.com/external-prettycons-lineal-prettycons/13/null/external-text-text-formatting-prettycons-lineal-prettycons.png"/><span style="padding-left: 2px;">Text</span>
                     </div>
-                    <div class="normBtn">
+                    <div class="normBtn add-rating">
                         <img src="https://img.icons8.com/external-tanah-basah-detailed-outline-tanah-basah/15/null/external-like-user-interface-tanah-basah-detailed-outline-tanah-basah.png"/>
                         <span style="padding-left: 2px;">Rating</span>
                     </div>
@@ -57,15 +65,8 @@
                         <img src="https://img.icons8.com/external-icongeek26-outline-icongeek26/14/null/external-date-camping-icongeek26-outline-icongeek26.png"/>
                         <span style="padding-left: 2px;">Date</span>
                     </div>
-                    <div class="normBtn">
-                        <div class="image-wrapper">
-                            <img src="https://img.icons8.com/external-dreamstale-lineal-dreamstale/11/null/external-down-arrow-arrows-dreamstale-lineal-dreamstale-15.png"/>
-                            <div class="dropdown-menu">
-                              <a href="#">Option 1</a>
-                              <a href="#">Option 2</a>
-                              <a href="#">Option 3</a>
-                            </div>
-                          </div>
+                    <div class="normBtn other-button">
+                        <img src="https://img.icons8.com/external-dreamstale-lineal-dreamstale/11/null/external-down-arrow-arrows-dreamstale-lineal-dreamstale-15.png"/>
                     </div>
                 </div>
 
