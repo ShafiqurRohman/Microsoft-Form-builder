@@ -378,11 +378,18 @@ div.adding-button.active {
 
 /* for others */
 #others{
-    width: 240px;
-    height: 200px; 
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;;
-    border-radius: 5px;
-    display: none;
+    padding: 15px;
+    width: 250px;
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    right: 30rem;
+    top: 300px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    
+      transform: .6s ease;
+      display: none;
 }
 
 .other-display{

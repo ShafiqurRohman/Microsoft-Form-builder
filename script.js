@@ -29,6 +29,7 @@ window.addEventListener('click', (e)=>{
     if(e.target == header || e.target == pTitle || e.target == pDes || e.target == iTitle || e.target == iDes){
         header.classList.add('active')
     }
+    console.log(e.target.textContent)
 })
 
 iTitle.addEventListener('change', ()=>{
@@ -44,8 +45,12 @@ iDes.addEventListener('change', ()=>{
 const addButton = document.querySelector('div.adding-button');
 const just_text = document.querySelector('div.adding-button .just-text');
 
-addButton.addEventListener('click', ()=>{
-    addButton.classList.toggle('active');  
+var count = 0;
+
+addButton.addEventListener('click', (e)=>{
+    if(e.target.textContent != ''){
+        addButton.classList.toggle('active');  
+    }
 })
 
 const questionArea = document.querySelector('.each-question');
@@ -267,8 +272,9 @@ questionRating.addEventListener('click', () => {
     questionIndex++;
 });
 
-
 const otherButton = document.querySelector('.other-button');
 otherButton.addEventListener('click', ()=>{   
-    console.log(others.style.display = 'block');
+    if(count%2)others.style.display = 'block';
+    else others.style.display = 'none';
+    console.log(count++)
 });
