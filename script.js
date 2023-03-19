@@ -16,10 +16,9 @@ var questionIndex = 0;
 
 // console.log(header, normView, inputView);
 
-const others = document.querySelector('#others');
 
 window.addEventListener('click', (e)=>{
-        if(e.target != header) {
+    if(e.target != header) {
         header.classList.remove('active');
         if(iTitle.value == ''){
             pTitle.textContent = 'Untitled Form'
@@ -29,7 +28,7 @@ window.addEventListener('click', (e)=>{
     if(e.target == header || e.target == pTitle || e.target == pDes || e.target == iTitle || e.target == iDes){
         header.classList.add('active')
     }
-    console.log(e.target.textContent)
+   // console.log(e.target.textContent)
 })
 
 iTitle.addEventListener('change', ()=>{
@@ -39,17 +38,50 @@ iDes.addEventListener('change', ()=>{
     pDes.textContent = iDes.value
 })
 
-
+const others = document.querySelector('.other-display');
+const otherButton = document.querySelector('.other-button');
 
 
 const addButton = document.querySelector('div.adding-button');
 const just_text = document.querySelector('div.adding-button .just-text');
 
-var count = 0;
+var check = true;
+
+otherButton.addEventListener('click', ()=>{   
+    document.getElementById("button-group").style.overflow  = 'visible';
+    (others.style.display == 'none' || others.style.display == '')?others.style.display = 'flex':others.style.display = 'none';
+});
+
+just_text.addEventListener('click', ()=>{
+    if(check){
+        addButton.classList.add('active');
+        check = false;
+        document.getElementById("button-group").style.overflow  = 'hidden'; 
+    }
+    else {
+        addButton.classList.remove('active');
+        check = true;
+        document.getElementById("button-group").style.overflow  = 'hidden';
+    }
+})
 
 addButton.addEventListener('click', (e)=>{
-    if(e.target.textContent != ''){
-        addButton.classList.toggle('active');  
+    let arr = e.target.textContent;
+    for(let i=0; i<arr.length; i++){
+        if(arr[i] == '+'){
+            if(check){
+                addButton.classList.add('active');
+                check = false;
+                document.getElementById("button-group").style.overflow  = 'hidden';
+            }
+            else {
+                addButton.classList.remove('active');
+                others.style.display = 'none';
+                check = true;
+                document.getElementById("button-group").style.overflow  = 'hidden';
+            }   
+            break;
+        }
     }
 })
 
@@ -272,9 +304,3 @@ questionRating.addEventListener('click', () => {
     questionIndex++;
 });
 
-const otherButton = document.querySelector('.other-button');
-otherButton.addEventListener('click', ()=>{   
-    if(count%2)others.style.display = 'block';
-    else others.style.display = 'none';
-    console.log(count++)
-});

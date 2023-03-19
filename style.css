@@ -102,6 +102,7 @@ div.adding-button {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 div.adding-button.active {
     width: 420px;
@@ -377,35 +378,36 @@ div.adding-button.active {
 }
 
 /* for others */
-#others{
-    padding: 15px;
+.other-button{
+    position: relative;
+}
+.other-display{
+    padding: 10px;
     width: 250px;
     position: absolute;
     z-index: 2;
     background-color: white;
-    right: 30rem;
-    top: 300px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
       rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    
-      transform: .6s ease;
-      display: none;
-}
-
-.other-display{
-    display: flex;
+    transform: .6s ease;
+     display: none;
     flex-direction: column;
+    text-align: left;
+    border-radius: 5px;
     padding-left: 10px;
 }
 
+
 .others-option{
     padding: 10px;
-    align-items: center;
+    align-items: left;
     color: rgb(3, 120, 124);
     font-size: 20px;
     cursor: pointer;
     font-weight: 400;
 }
 .others-option:hover{
-    background: rgb(245, 245, 245);
+    background: rgb(219, 217, 217);
 }
+
+
