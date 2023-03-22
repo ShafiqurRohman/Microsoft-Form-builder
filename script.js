@@ -1,4 +1,4 @@
-
+const container = document.querySelector('.container');
 const myForm = document.querySelector('.my-form');
 const header = document.querySelector('.header')
 const normView = document.querySelector('.normal-view')
@@ -25,7 +25,11 @@ window.addEventListener('click', (e)=>{
         }
     }
 
-    if(e.target == header || e.target == pTitle || e.target == pDes || e.target == iTitle || e.target == iDes){
+    if(e.target == header
+        || e.target == pTitle 
+        || e.target == pDes 
+        || e.target == iTitle 
+        || e.target == iDes){
         header.classList.add('active')
     }
    // console.log(e.target.textContent)
@@ -90,61 +94,164 @@ const questionOption = document.querySelector('.add-question');
 
 questionOption.addEventListener('click', ()=>{
     const newQuestion = document.createElement('div');
-    //newQuestion.classList.add('questionOption');
-    newQuestion.innerHTML = `
-    <div id="question-${questionIndex}" class="question-div">
-    <div class="place-change">
-    <span class="material-symbols-outlined iconSize">content_copy</span>
-    <span id="delete-${questionIndex}"  class="material-symbols-outlined iconSize">delete</span>
-    <span class="material-symbols-outlined iconSize">arrow_downward</span>
-    <span class="material-symbols-outlined iconSize">arrow_upward</span>
-    </div>
-    <div class="question-header">
-        <div class="question-title">
-            <span class="number-size"> ${questionIndex+1}. </span>
-            <input type="text" placeholder="Untitled Question ${questionIndex+1}">
+    const index = questionIndex;
+    let html = `
+    <div id="question-${index}" class="question-div">
+        <div class="place-change">
+        <span class="material-symbols-outlined iconSize">content_copy</span>
+        <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
+        <span class="material-symbols-outlined iconSize">arrow_downward</span>
+        <span class="material-symbols-outlined iconSize">arrow_upward</span>
         </div>
-    </div>
-    <div class="question-body">
-        <div class="question-options">
-            <div class="option">
-                <input class="option-radio" type="radio">
-                <input class="option-input" type="text" placeholder="Option-1">
-            </div>
-            <div class="option">
-                <input class="option-radio" type="radio">
-                <input class="option-input" type="text" placeholder="Option-2">
+        <div class="question-header">
+            <div class="question-title">
+                <span class="number-size"> ${index+1}. </span>
+                <input id="input-head-${index}" type="text" placeholder="Untitled Question ${index+1}">
             </div>
         </div>
+        <div class="question-body">
+            <div class="question-options">
+                <div class="option">
+                    <input class="option-radio" type="radio">
+                    <input id="input1-${index}" class="option-input" type="text" placeholder="Option-1">
+                </div>
+                <div class="option">
+                    <input class="option-radio" type="radio">
+                    <input id="input2-${index}" class="option-input" type="text" placeholder="Option-2">
+                </div>
+            </div>
 
-        <div class="extra-option">
-            <div class="option">
-               <span> + add option </span>
+            <div class="extra-option">
+                <div class="option">
+                <span> + add option </span>
+                </div>
+                <div class="option">
+                    <span> add "other" option </span>
+                </div>
             </div>
-            <div class="option">
-                <span> add "other" option </span>
-            </div>
-        </div>
 
-    </div>
-    <div class="extra-functon">
-        <div class="option">
-            <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Multile answer
         </div>
-        <div class="option">
-        <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
-        </div>
-        <div class="option">
-        <span class="material-symbols-outlined">more_horiz</span> 
-        </div>
+        <div class="extra-functon">
+            <div class="option">
+                <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Multile answer
+            </div>
+            <div class="option">
+                <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
+            </div>
+            <div class="option">
+                <span class="material-symbols-outlined">more_horiz</span> 
+            </div>
         </div>
     </div>
     `
+
+    newQuestion.innerHTML = html;
     questionArea.appendChild(newQuestion);
-    const index = questionIndex;
-    document.getElementById(`delete-${index}`).addEventListener('click', ()=>{
-        document.getElementById(`question-${index}`).remove();
-    })
+    
+    const currentDom = document.getElementById(`question-${index}`);
+    const bodyDom =document.querySelector('body');
+
+
+    window.addEventListener('click', (e) => {
+        //console.log(e.target)
+        const clickHead = document.querySelector(`#head-${index}`);
+        const clickOption = document.querySelector(`#option1-${index}`);
+        const clickOption2 = document.querySelector(`#option2-${index}`);
+        const clickText = document.querySelector(`#question-view-${index}`);
+        //console.log(clickHead, clickOption)
+        
+        if(e.target == myForm || e.target == bodyDom){
+            let quesiton = document.querySelector(`#input-head-${index}`).value;
+            if(quesiton == '') quesiton = `Untitled Question`;
+            let option1 = document.querySelector(`#input1-${index}`).value;
+            if(option1 == '') option1 = `Option-1`;
+            let option2 = document.querySelector(`#input2-${index}`).value;
+            if(option2 == '') option2 = `Option-2`;
+            let defaultHtml = ` 
+                <div class="question-header">
+                    <div class="question-title">
+                        <h3 id="head-${index}">${index+1}. <span id="question-view-${index}">${quesiton}</span></h3>
+                    </div>  
+                </div>
+                <div class="question-body">
+                    <div class="question-options">
+                        <div id="option1-${index}" class="option">
+                            <input class="option-radio" type="radio">
+                            <p id="option-view1-${index}">${option1}</p>
+                        </div>
+                        <div id="option2-${index}" class="option">
+                            <input class="option-radio" type="radio">
+                            <p id="option-view2-${index}">${option2}</p>
+                        </div>
+                    </div>
+                </div>
+            `
+            currentDom.innerHTML = defaultHtml;
+
+        }
+        else if(e.target == currentDom || e.target == clickHead || e.target == clickOption || e.target == clickOption2 || e.target == clickText){
+            let question = document.querySelector(`#question-view-${index}`).textContent;
+            if(question == 'Untitled Question') question = '';
+            let option1 = document.querySelector(`#option-view1-${index}`).textContent;
+            if(option1 == 'Option-1') option1 = '';
+            let option2 = document.querySelector(`#option-view2-${index}`).textContent;
+            if(option2 == 'Option-2') option2 = '';
+            currentDom.innerHTML= `
+            <div class="place-change">
+            <span class="material-symbols-outlined iconSize">content_copy</span>
+            <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
+            <span class="material-symbols-outlined iconSize">arrow_downward</span>
+            <span class="material-symbols-outlined iconSize">arrow_upward</span>
+            </div>
+            <div class="question-header">
+                <div class="question-title">
+                    <span class="number-size"> ${index+1}. </span>
+                    <input id="input-head-${index}" value="${question}" type="text" placeholder="Untitled Question ${index+1}">
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-options">
+                    <div class="option">
+                        <input class="option-radio" type="radio">
+                        <input id="input1-${index}" value="${option1}" class="option-input" type="text" placeholder="Option-1">
+                    </div>
+                    <div class="option">
+                        <input class="option-radio" type="radio">
+                        <input id="input2-${index}" value="${option2}" class="option-input" type="text" placeholder="Option-2">
+                    </div>
+                </div>
+    
+                <div class="extra-option">
+                    <div class="option">
+                    <span> + add option </span>
+                    </div>
+                    <div class="option">
+                        <span> add "other" option </span>
+                    </div>
+                </div>
+    
+            </div>
+            <div class="extra-functon">
+                <div class="option">
+                    <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Multile answer
+                </div>
+                <div class="option">
+                    <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
+                </div>
+                <div class="option">
+                    <span class="material-symbols-outlined">more_horiz</span> 
+                </div>
+            </div>
+            ` 
+         }
+
+        const deleteDom = document.getElementById(`delete-${index}`);
+        deleteDom.addEventListener('click', ()=>{
+            document.getElementById(`question-${index}`).remove();
+        })
+
+    });
+    
     questionIndex++;
 })
 
@@ -153,19 +260,19 @@ const questionText = document.querySelector('.add-text');
 
 questionText.addEventListener('click', ()=>{
     const newQuestion = document.createElement('div');
-    //newQuestion.classList.add('questionOption');
-    newQuestion.innerHTML = `
-    <div id="question-${questionIndex}" class="question-div">
+    const index = questionIndex;
+    let html = `
+    <div id="question-${index}" class="question-div">
     <div class="place-change">
     <span class="material-symbols-outlined iconSize">content_copy</span>
-    <span id="delete-${questionIndex}"  class="material-symbols-outlined iconSize">delete</span>
+    <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
     <span class="material-symbols-outlined iconSize">arrow_downward</span>
     <span class="material-symbols-outlined iconSize">arrow_upward</span>
     </div>
     <div class="question-header">
         <div class="question-title">
-            <span class="number-size"> ${questionIndex+1}. </span>
-            <input type="text" placeholder="Untitled Question ${questionIndex+1}">
+            <span class="number-size"> ${index+1}. </span>
+            <input id="input-head-${index}" type="text" placeholder="Untitled Question ${index+1}">
         </div>
     </div>
 
@@ -173,43 +280,116 @@ questionText.addEventListener('click', ()=>{
         <input class="text-input" type="text" placeholder="Enter your answer">
     </div>
 
-    <div class="extra-functon">
-        <div class="option">
-            <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Long answer
-        </div>
-        <div class="option">
-        <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
-        </div>
-        <div class="option">
-        <span class="material-symbols-outlined">more_horiz</span> 
-        </div>
+        <div class="extra-functon">
+            <div class="option">
+                <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Long answer
+            </div>
+            <div class="option">
+                <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
+            </div>
+            <div class="option">
+                <span class="material-symbols-outlined">more_horiz</span> 
+            </div>
         </div>
     </div>
     `
+
+    newQuestion.innerHTML = html;
     questionArea.appendChild(newQuestion);
-    const index = questionIndex;
     document.getElementById(`delete-${index}`).addEventListener('click', ()=>{
             document.getElementById(`question-${index}`).remove();
     });
+
+
+    const currentDom = document.getElementById(`question-${index}`);
+    const bodyDom =document.querySelector('body');
+
+
+    window.addEventListener('click', (e) => {
+        
+        const clickHead = document.querySelector(`#head-${index}`);
+        
+        
+        if(e.target == myForm || e.target == bodyDom){
+            let quesiton = document.querySelector(`#input-head-${index}`).value;
+            if(quesiton == '') quesiton = `Untitled Question`;
+            let defaultHtml = ` 
+            <div class="question-header">
+                <div class="question-title">
+                <h3 id="head-${index}">${index+1}. <span id="question-view-${index}">${quesiton}</span></h3>
+                </div>
+            </div>
+    
+            <div class="question-body">
+                <input class="text-input" type="text" placeholder="Enter your answer">
+            </div>
+            `
+            currentDom.innerHTML = defaultHtml;
+
+        }
+        else if(e.target == currentDom || e.target == clickHead){
+            let question = document.querySelector(`#question-view-${index}`).textContent;
+            if(question == 'Untitled Question') question = ``;
+            currentDom.innerHTML= `
+            <div class="place-change">
+            <span class="material-symbols-outlined iconSize">content_copy</span>
+            <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
+            <span class="material-symbols-outlined iconSize">arrow_downward</span>
+            <span class="material-symbols-outlined iconSize">arrow_upward</span>
+            </div>
+            <div class="question-header">
+                <div class="question-title">
+                    <span class="number-size"> ${index+1}. </span>
+                    <input id="input-head-${index}" value="${question}" type="text" placeholder="Untitled Question ${index+1}">
+                </div>
+            </div>
+
+            <div class="question-body">
+                <input class="text-input" type="text" placeholder="Enter your answer">
+            </div>
+
+            <div class="extra-functon">
+                <div class="option">
+                    <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Multile answer
+                </div>
+                <div class="option">
+                    <span class="material-symbols-outlined extra-option-icon">toggle_off</span> Required
+                </div>
+                <div class="option">
+                    <span class="material-symbols-outlined">more_horiz</span> 
+                </div>
+            </div>
+            ` 
+         }
+
+        const deleteDom = document.getElementById(`delete-${index}`);
+        deleteDom.addEventListener('click', ()=>{
+            document.getElementById(`question-${index}`).remove();
+        })
+    })
+
     questionIndex++;
 });
+
+
 
 const questionDate = document.querySelector('.add-date');
 
 questionDate.addEventListener('click', ()=>{
+    const index = questionIndex;
     const newQuestion = document.createElement('div');
     newQuestion.innerHTML = `
-    <div id="question-${questionIndex}" class="question-div">
+    <div id="question-${index}" class="question-div">
     <div class="place-change">
     <span class="material-symbols-outlined iconSize">content_copy</span>
-    <span id="delete-${questionIndex}"  class="material-symbols-outlined iconSize">delete</span>
+    <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
     <span class="material-symbols-outlined iconSize">arrow_downward</span>
     <span class="material-symbols-outlined iconSize">arrow_upward</span>
     </div>
     <div class="question-header">
         <div class="question-title">
-            <span class="number-size"> ${questionIndex+1}. </span>
-            <input type="text" placeholder="Untitled Question ${questionIndex+1}">
+            <span class="number-size"> ${index+1}. </span>
+            <input type="text" placeholder="Untitled Question ${index+1}">
         </div>
     </div>
 
@@ -228,7 +408,10 @@ questionDate.addEventListener('click', ()=>{
     </div>
     `
     questionArea.appendChild(newQuestion);
-    const index = questionIndex;
+
+
+
+    
     document.getElementById(`delete-${index}`).addEventListener('click', ()=>{
         document.getElementById(`question-${index}`).remove();
     })
