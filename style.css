@@ -168,6 +168,14 @@ div.adding-button.active {
     border-top: 4px solid rgb(3, 120, 124);
     display: block;
 }
+
+.question-div-clean{
+    border-radius: 4px;
+    box-shadow: none;
+    margin-top: 20px;
+    padding-bottom: 0px;
+    display: block;
+}
   .place-change{
     display: flex;
     width: 100%;
@@ -304,6 +312,19 @@ div.adding-button.active {
 
 }
 
+.text-input-view{
+    padding: 6px 10px;
+    outline: 0px;
+    width: 92%;
+    font-size: 15px;
+    line-height: 20px;
+    color: black;
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 4px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
 .option-time{
     padding: 6px 10px;
     outline: 0px;
@@ -316,6 +337,7 @@ div.adding-button.active {
     border-radius: 4px;
     margin-top: 15px;
     margin-bottom: 20px;
+    cursor: not-allowed;
 }
 
 
