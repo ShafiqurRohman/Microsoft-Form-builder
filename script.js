@@ -11,17 +11,24 @@ const iTitle = document.querySelector('.input-section #title')
 const iDes = document.querySelector('.input-section #description')
 
 var questionIndex = 0;
+pTitle.textContent = localStorage.getItem('title');
+pDes.textContent = localStorage.getItem('description');
 
-// console.log(pTitle, pDes, iTitle, iDes);
 
-// console.log(header, normView, inputView);
-
+if(localStorage.getItem('title') == null || pTitle.textContent == ''){
+    pTitle.textContent = 'Untitled Form';
+}
 
 window.addEventListener('click', (e)=>{
     if(e.target != header) {
         header.classList.remove('active');
-        if(iTitle.value == ''){
-            pTitle.textContent = 'Untitled Form'
+        if(localStorage.getItem('title') == null || pTitle.textContent == '' || localStorage.getItem('title') == ''){
+            pTitle.textContent = 'Untitled Form';
+            pDes.textContent = localStorage.getItem('description');
+        }
+        else{
+            pTitle.textContent = localStorage.getItem('title');
+            pDes.textContent = localStorage.getItem('description');
         }
     }
 
@@ -30,17 +37,22 @@ window.addEventListener('click', (e)=>{
         || e.target == pDes 
         || e.target == iTitle 
         || e.target == iDes){
-        header.classList.add('active')
+        header.classList.add('active');
+        iTitle.value = localStorage.getItem('title');
+        iDes.value = localStorage.getItem('description');
     }
-   // console.log(e.target.textContent)
+  
 })
 
 iTitle.addEventListener('change', ()=>{
-    pTitle.textContent = iTitle.value
+    pTitle.textContent = iTitle.value;
+    localStorage.setItem('title', iTitle.value);
 })
 iDes.addEventListener('change', ()=>{
-    pDes.textContent = iDes.value
+    if(iDes.value != '')pDes.textContent = iDes.value;
+    localStorage.setItem('description', iDes.value);
 })
+
 
 const others = document.querySelector('.other-display');
 const otherButton = document.querySelector('.other-button');
@@ -92,13 +104,43 @@ addButton.addEventListener('click', (e)=>{
 const questionArea = document.querySelector('.each-question');
 const questionOption = document.querySelector('.add-question');
 
-questionOption.addEventListener('click', ()=>{
+// let dataArr = [];
+
+// for(let key in localStorage) {
+//     if(localStorage.getItem(key) == null) continue;
+//     if(localStorage.getItem(key).includes('question') && localStorage.getItem(key).includes('type')){
+//         dataArr.push(JSON.parse(localStorage.getItem(key)));
+        
+//     }
+// }
+
+
+// dataArr.forEach(element => {
+//     if(element.type == 'choice') {
+//         chooseQuestion(element.question, element.option1, element.option2);
+//         questionIndex++;
+//     }
+//     if(element.type == 'text') {
+//         textQuestion(element.question);
+//         questionIndex++;
+//     }
+//     if(element.type == 'date') {
+//         dateQuestion(element.question);
+//         questionIndex++;
+//     }
+//     if(element.type == 'rating') {
+//         rating(element.question);
+//         questionIndex++;
+//     }
+// });
+
+function chooseQuestion(quesitonTitle = 'Question', option1 = 'Option-1', option2 = 'Option-2'){
     const newQuestion = document.createElement('div');
     const index = questionIndex;
     let html = `
     <div id="question-${index}" class="question-div">
         <div class="place-change">
-        <span class="material-symbols-outlined iconSize">content_copy</span>
+        <span id="copy-content-${index}" class="material-symbols-outlined iconSize">content_copy</span>
         <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
         <span class="material-symbols-outlined iconSize">arrow_downward</span>
         <span class="material-symbols-outlined iconSize">arrow_upward</span>
@@ -106,18 +148,18 @@ questionOption.addEventListener('click', ()=>{
         <div class="question-header">
             <div class="question-title">
                 <span class="number-size"> ${index+1}. </span>
-                <input id="input-head-${index}" type="text" placeholder="Enter the Question">
+                <input value="${quesitonTitle}" id="input-head-${index}" type="text" placeholder="Enter the Question">
             </div>
         </div>
         <div class="question-body">
             <div class="question-options">
                 <div class="option">
                     <input class="option-radio" type="radio">
-                    <input id="input1-${index}" class="option-input" type="text" placeholder="Option-1">
+                    <input value="${option1}" id = "input1-${index}" class="option-input" type="text" placeholder="Option-1">
                 </div>
                 <div class="option">
                     <input class="option-radio" type="radio">
-                    <input id="input2-${index}" class="option-input" type="text" placeholder="Option-2">
+                    <input value="${option2}" id = "input2-${index}" class="option-input" type="text" placeholder="Option-2">
                 </div>
             </div>
 
@@ -147,27 +189,30 @@ questionOption.addEventListener('click', ()=>{
 
     newQuestion.innerHTML = html;
     questionArea.appendChild(newQuestion);
+    let data = {
+        type: 'choice',
+        question: quesitonTitle,
+        option1: option1,
+        option2: option2
+    }
+    localStorage.setItem(`question-${index}`, JSON.stringify(data));
     
     const currentDom = document.getElementById(`question-${index}`);
     const bodyDom =document.querySelector('body');
 
 
     window.addEventListener('click', (e) => {
-        //console.log(e.target)
+
         const clickHead = document.querySelector(`#head-${index}`);
         const clickOption = document.querySelector(`#option1-${index}`);
         const clickOption2 = document.querySelector(`#option2-${index}`);
         const clickText = document.querySelector(`#question-view-${index}`);
         const clickDiv = document.querySelector(`.click-div-${index}`);
-        //console.log(clickHead, clickOption)
 
         if(e.target == myForm || e.target == bodyDom){
             let quesiton = document.querySelector(`#input-head-${index}`).value;
-            if(quesiton == '') quesiton = `Not set Question`;
             let option1 = document.querySelector(`#input1-${index}`).value;
-            if(option1 == '') option1 = `Option-1`;
             let option2 = document.querySelector(`#input2-${index}`).value;
-            if(option2 == '') option2 = `Option-2`;
 
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.add('question-div-clean');
@@ -193,15 +238,19 @@ questionOption.addEventListener('click', ()=>{
                 </div>
             `
             currentDom.innerHTML = defaultHtml;
+            let data = {
+                type: 'choice',
+                question: quesiton,
+                option1: option1,
+                option2: option2
+            }
+            localStorage.setItem(`question-${index}`, JSON.stringify(data));
 
         }
         else if(e.target == currentDom || e.target == clickHead || e.target == clickOption || e.target == clickOption2 || e.target == clickText || e.target == clickDiv){
             let question = document.querySelector(`#question-view-${index}`).textContent;
-            if(question == 'Not set Question') question = '';
             let option1 = document.querySelector(`#option-view1-${index}`).textContent;
-            if(option1 == 'Option-1') option1 = '';
             let option2 = document.querySelector(`#option-view2-${index}`).textContent;
-            if(option2 == 'Option-2') option2 = '';
 
 
             let classAdd = document.querySelector(`#question-${index}`);
@@ -210,7 +259,7 @@ questionOption.addEventListener('click', ()=>{
 
             currentDom.innerHTML= `
             <div class="place-change">
-            <span class="material-symbols-outlined iconSize">content_copy</span>
+            <span id = "copy-content-${index}" class="material-symbols-outlined iconSize">content_copy</span>
             <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
             <span class="material-symbols-outlined iconSize">arrow_downward</span>
             <span class="material-symbols-outlined iconSize">arrow_upward</span>
@@ -255,29 +304,51 @@ questionOption.addEventListener('click', ()=>{
                 </div>
             </div>
             ` 
+
+                
+            let data = {
+                type: 'choice',
+                question: quesiton,
+                option1: option1,
+                option2: option2
+            }
+            localStorage.setItem(`question-${index}`, JSON.stringify(data));
          }
+
+         const copyContent = document.getElementById(`copy-content-${index}`);
+         if(copyContent)copyContent.addEventListener('click', ()=>{
+             const quesiton = document.querySelector(`#input-head-${index}`).value;
+             const option1 = document.querySelector(`#input1-${index}`).value;
+             const option2 = document.querySelector(`#input2-${index}`).value;
+             chooseQuestion(quesiton, option1, option2);
+         })
 
         const deleteDom = document.getElementById(`delete-${index}`);
         if(deleteDom)deleteDom.addEventListener('click', ()=>{
             const deleteFrom = document.getElementById(`question-${index}`);
             if(deleteFrom)deleteFrom.remove();
+            localStorage.removeItem(`question-${index}`);
         })
 
     });
     
     questionIndex++;
-})
+}
+
+questionOption.addEventListener('click', function(){
+    chooseQuestion();
+});
 
 
 const questionText = document.querySelector('.add-text');
 
-questionText.addEventListener('click', ()=>{
+function textQuestion(quesitonTitle = 'Question'){
     const newQuestion = document.createElement('div');
     const index = questionIndex;
     let html = `
     <div id="question-${index}" class="question-div">
     <div class="place-change">
-    <span class="material-symbols-outlined iconSize">content_copy</span>
+    <span id="copy-content-${index}" class="material-symbols-outlined iconSize">content_copy</span>
     <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
     <span class="material-symbols-outlined iconSize">arrow_downward</span>
     <span class="material-symbols-outlined iconSize">arrow_upward</span>
@@ -285,7 +356,7 @@ questionText.addEventListener('click', ()=>{
     <div class="question-header">
         <div class="question-title">
             <span class="number-size"> ${index+1}. </span>
-            <input id="input-head-${index}" type="text" placeholder="Enter the Question">
+            <input value="${quesitonTitle}" id="input-head-${index}" type="text" placeholder="Enter the Question">
         </div>
     </div>
 
@@ -309,10 +380,11 @@ questionText.addEventListener('click', ()=>{
 
     newQuestion.innerHTML = html;
     questionArea.appendChild(newQuestion);
-    document.getElementById(`delete-${index}`).addEventListener('click', ()=>{
-            document.getElementById(`question-${index}`).remove();
-    });
-
+    let data = {
+        type: 'text',
+        question: quesitonTitle,
+    }
+    localStorage.setItem(`question-${index}`, JSON.stringify(data));
 
     const currentDom = document.getElementById(`question-${index}`);
     const bodyDom =document.querySelector('body');
@@ -324,9 +396,7 @@ questionText.addEventListener('click', ()=>{
         const clickDiv = document.querySelector(`.click-div-${index}`);
         
         if(e.target == myForm || e.target == bodyDom){
-            let quesiton = document.querySelector(`#input-head-${index}`).value;
-            if(quesiton == '') quesiton = `Not set Question`;
-
+            let question = document.querySelector(`#input-head-${index}`).value;
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.add('question-div-clean');
             classAdd.classList.remove('question-div');
@@ -334,7 +404,7 @@ questionText.addEventListener('click', ()=>{
             let defaultHtml = ` 
             <div class="question-header">
                 <div class="question-title">
-                <h3 id="head-${index}">${index+1}. <span id="question-view-${index}" class="click-div-${index}">${quesiton}</span></h3>
+                <h3 id="head-${index}">${index+1}. <span id="question-view-${index}" class="click-div-${index}">${question}</span></h3>
                 </div>
             </div>
     
@@ -343,11 +413,15 @@ questionText.addEventListener('click', ()=>{
             </div>
             `
             currentDom.innerHTML = defaultHtml;
+            let data = {
+                type: 'text',
+                question: question,
+            }
+            localStorage.setItem(`question-${index}`, JSON.stringify(data));
 
         }
         else if(e.target == currentDom || e.target == clickHead || e.target == clickDiv){
             let question = document.querySelector(`#question-view-${index}`).textContent;
-            if(question == 'Not set Question') question = ``;
 
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.remove('question-div-clean');
@@ -355,7 +429,7 @@ questionText.addEventListener('click', ()=>{
 
             currentDom.innerHTML= `
             <div class="place-change">
-            <span class="material-symbols-outlined iconSize">content_copy</span>
+            <span id="copy-content-${index}" class="material-symbols-outlined iconSize">content_copy</span>
             <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
             <span class="material-symbols-outlined iconSize">arrow_downward</span>
             <span class="material-symbols-outlined iconSize">arrow_upward</span>
@@ -383,29 +457,46 @@ questionText.addEventListener('click', ()=>{
                 </div>
             </div>
             ` 
+
+            let data = {
+                type: 'text',
+                question: question,
+            }
+            localStorage.setItem(`question-${index}`, JSON.stringify(data));
          }
+
+        const copyContent = document.getElementById(`copy-content-${index}`);
+        if(copyContent)copyContent.addEventListener('click', ()=>{
+            const quesiton = document.querySelector(`#input-head-${index}`).value;
+            textQuestion(quesiton);
+        })
 
          const deleteDom = document.getElementById(`delete-${index}`);
          if(deleteDom)deleteDom.addEventListener('click', ()=>{
              const deleteFrom = document.getElementById(`question-${index}`);
              if(deleteFrom)deleteFrom.remove();
+             localStorage.removeItem(`question-${index}`);
          })
     })
 
     questionIndex++;
+}
+
+questionText.addEventListener('click', function(){
+    textQuestion();
 });
 
 
 
 const questionDate = document.querySelector('.add-date');
 
-questionDate.addEventListener('click', ()=>{
+function dateQuestion(quesitonTitle = 'Question'){
     const index = questionIndex;
     const newQuestion = document.createElement('div');
     newQuestion.innerHTML = `
     <div id="question-${index}" class="question-div">
     <div class="place-change">
-    <span class="material-symbols-outlined iconSize">content_copy</span>
+    <span id="copy-content-${index}"  class="material-symbols-outlined iconSize">content_copy</span>
     <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
     <span class="material-symbols-outlined iconSize">arrow_downward</span>
     <span class="material-symbols-outlined iconSize">arrow_upward</span>
@@ -413,7 +504,7 @@ questionDate.addEventListener('click', ()=>{
     <div class="question-header">
         <div class="question-title">
             <span class="number-size"> ${index+1}. </span>
-            <input id="input-head-${index}" type="text" placeholder="Enter the Question">
+            <input value="${quesitonTitle}" id="input-head-${index}" type="text" placeholder="Enter the Question">
         </div>
     </div>
 
@@ -432,6 +523,11 @@ questionDate.addEventListener('click', ()=>{
     </div>
     `
     questionArea.appendChild(newQuestion);
+    let data = {
+        type: 'date',
+        question: quesitonTitle,
+    }
+    localStorage.setItem(`question-${index}`, JSON.stringify(data));
 
     const currentDom = document.getElementById(`question-${index}`);
     const bodyDom =document.querySelector('body');
@@ -444,8 +540,8 @@ questionDate.addEventListener('click', ()=>{
         
         
         if(e.target == myForm || e.target == bodyDom){
-            let quesiton = document.querySelector(`#input-head-${index}`).value;
-            if(quesiton == '') quesiton = `Not set Question`;
+            let question = document.querySelector(`#input-head-${index}`).value;
+            if(question == '') quesiton = `Not set Question`;
 
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.add('question-div-clean');
@@ -454,7 +550,7 @@ questionDate.addEventListener('click', ()=>{
             let defaultHtml = ` 
             <div class="question-header">
                 <div class="question-title">
-                <h3 id="head-${index}">${index+1}. <span id="question-view-${index}" class="click-div-${index}">${quesiton}</span></h3>
+                <h3 id="head-${index}">${index+1}. <span id="question-view-${index}" class="click-div-${index}">${question}</span></h3>
                 </div>
             </div>
     
@@ -463,6 +559,11 @@ questionDate.addEventListener('click', ()=>{
             </div>
             `
             currentDom.innerHTML = defaultHtml;
+            let data = {
+                type: 'date',
+                question: question,
+            }
+            localStorage.setItem(`question-${index}`, JSON.stringify(data));
 
         }
         else if(e.target == currentDom || e.target == clickHead || e.target == clickDiv){
@@ -475,7 +576,7 @@ questionDate.addEventListener('click', ()=>{
 
             currentDom.innerHTML= `
             <div class="place-change">
-            <span class="material-symbols-outlined iconSize">content_copy</span>
+            <span id="copy-content-${index}" class="material-symbols-outlined iconSize">content_copy</span>
             <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
             <span class="material-symbols-outlined iconSize">arrow_downward</span>
             <span class="material-symbols-outlined iconSize">arrow_upward</span>
@@ -503,28 +604,49 @@ questionDate.addEventListener('click', ()=>{
                 </div>
             </div>
             ` 
+            let data = {
+                type: 'date',
+                question: question,
+            }
+            localStorage.setItem(`question-${index}`, JSON.stringify(data));
          }
+
+        const copyContent = document.getElementById(`copy-content-${index}`);
+        if(copyContent)copyContent.addEventListener('click', ()=>{
+            const quesiton = document.querySelector(`#input-head-${index}`).value;
+            textQuestion(quesiton);
+            quesiton.stopPropagation();
+        })
 
          const deleteDom = document.getElementById(`delete-${index}`);
          if(deleteDom)deleteDom.addEventListener('click', ()=>{
-             const deleteFrom = document.getElementById(`question-${index}`);
-             if(deleteFrom)deleteFrom.remove();
+            const deleteFrom = document.getElementById(`question-${index}`);
+            if(deleteFrom)deleteFrom.remove();
+            localStorage.removeItem(`question-${index}`);
          })
     })
 
     questionIndex++;
+}
+
+questionDate.addEventListener('click', function(){
+    dateQuestion();
 });
 
 
 const questionRating = document.querySelector('.add-rating');
 
-questionRating.addEventListener('click', () => {
+questionRating.addEventListener('click', function(){
+    rating()
+});
+
+function rating(quesitonTitle = 'Quesiton'){
     const newQuestion = document.createElement('div');
     const index = questionIndex;
     newQuestion.innerHTML = `
     <div id="question-${index}" class="question-div">
     <div class="place-change">
-    <span class="material-symbols-outlined iconSize">content_copy</span>
+    <span id="copy-content-${index}" class="material-symbols-outlined iconSize">content_copy</span>
     <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
     <span class="material-symbols-outlined iconSize">arrow_downward</span>
     <span class="material-symbols-outlined iconSize">arrow_upward</span>
@@ -532,7 +654,7 @@ questionRating.addEventListener('click', () => {
     <div class="question-header">
         <div class="question-title">
             <span class="number-size"> ${index+1}. </span>
-            <input id="input-head-${index}" type="text" placeholder="Enter the question">
+            <input value="${quesitonTitle}" id="input-head-${index}" type="text" placeholder="Enter the question">
         </div>
     </div>
 
@@ -586,7 +708,11 @@ questionRating.addEventListener('click', () => {
 </div>
     `
     questionArea.appendChild(newQuestion);
-
+    let data = {
+        type: 'rating',
+        question: quesitonTitle,
+    }
+    localStorage.setItem(`question-${index}`, JSON.stringify(data));
 
     const currentDom = document.getElementById(`question-${index}`);
     const bodyDom =document.querySelector('body');
@@ -599,8 +725,7 @@ questionRating.addEventListener('click', () => {
         
         
         if(e.target == myForm || e.target == bodyDom){
-            let quesiton = document.querySelector(`#input-head-${index}`).value;
-            if(quesiton == '') quesiton = `Not set Question`;
+            let question = document.querySelector(`#input-head-${index}`).value;
 
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.add('question-div-clean');
@@ -609,7 +734,7 @@ questionRating.addEventListener('click', () => {
             let defaultHtml = ` 
             <div class="question-header">
                 <div class="question-title">
-                <h3 id="head-${index}">${index+1}. <span id="question-view-${index}" class="click-div-${index}">${quesiton}</span></h3>
+                <h3 id="head-${index}">${index+1}. <span id="question-view-${index}" class="click-div-${index}">${question}</span></h3>
                 </div>
             </div>
     
@@ -622,6 +747,11 @@ questionRating.addEventListener('click', () => {
             </div>
             `
             currentDom.innerHTML = defaultHtml;
+            let data = {
+                type: 'rating',
+                question: question,
+            }
+            localStorage.setItem(`question-${index}`, JSON.stringify(data));
 
         }
         else if(e.target == currentDom || e.target == clickHead || e.target == clickDiv){
@@ -634,7 +764,7 @@ questionRating.addEventListener('click', () => {
 
             currentDom.innerHTML= `
             <div class="place-change">
-            <span class="material-symbols-outlined iconSize">content_copy</span>
+            <span id="copy-content-${index}" class="material-symbols-outlined iconSize">content_copy</span>
             <span id="delete-${index}"  class="material-symbols-outlined iconSize">delete</span>
             <span class="material-symbols-outlined iconSize">arrow_downward</span>
             <span class="material-symbols-outlined iconSize">arrow_upward</span>
@@ -696,12 +826,24 @@ questionRating.addEventListener('click', () => {
                 </div>
             </div>
             ` 
+            let data = {
+                type: 'rating',
+                question: question,
+            }
+            localStorage.setItem(`question-${index}`, JSON.stringify(data));
          }
 
-         const deleteDom = document.getElementById(`delete-${index}`);
+        const copyContent = document.getElementById(`copy-content-${index}`);
+        if(copyContent)copyContent.addEventListener('click', ()=>{
+            const quesiton = document.querySelector(`#input-head-${index}`).value;
+            rating(quesiton);
+        })
+
+        const deleteDom = document.getElementById(`delete-${index}`);
         if(deleteDom)deleteDom.addEventListener('click', ()=>{
             const deleteFrom = document.getElementById(`question-${index}`);
             if(deleteFrom)deleteFrom.remove();
+            localStorage.removeItem(`question-${index}`);
         })
 
         // const deleteDom = document.getElementById(`delete-${index}`);
@@ -720,5 +862,6 @@ questionRating.addEventListener('click', () => {
     })
 
     questionIndex++;
-});
+}
+
 
