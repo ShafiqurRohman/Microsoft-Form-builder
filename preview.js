@@ -6,6 +6,11 @@ if(header.textContent == '') header.textContent = 'Untitled header';
 des.textContent = localStorage.getItem('description');
 
 const questionArea = document.querySelector('.each-question');
+const backbtn = document.querySelector('.back-btn');
+
+backbtn.addEventListener('click', () => {
+        window.location.href = './index.html';
+})
 
 let dataArr = [];
 
@@ -16,6 +21,8 @@ for(let key in localStorage) {
         
     }
 }
+
+dataArr.reverse();
 
 function createOption(option, index) {
     const {question : question, option1 : option1, option2 : option2} = option;

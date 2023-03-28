@@ -46,11 +46,18 @@ window.addEventListener('click', (e)=>{
 
 iTitle.addEventListener('change', ()=>{
     pTitle.textContent = iTitle.value;
+    if(iTitle.value == '' || iTitle.value == null) pTitle.textContent = 'Untitled Form';
     localStorage.setItem('title', iTitle.value);
 })
 iDes.addEventListener('change', ()=>{
     if(iDes.value != '')pDes.textContent = iDes.value;
     localStorage.setItem('description', iDes.value);
+})
+
+const previewbtn = document.querySelector('.preview');
+
+previewbtn.addEventListener('click', ()=>{
+    window.location.href = './preview.html';
 })
 
 
@@ -104,38 +111,72 @@ addButton.addEventListener('click', (e)=>{
 const questionArea = document.querySelector('.each-question');
 const questionOption = document.querySelector('.add-question');
 
-// let dataArr = [];
+ let dataArr = [];
 
-// for(let key in localStorage) {
-//     if(localStorage.getItem(key) == null) continue;
-//     if(localStorage.getItem(key).includes('question') && localStorage.getItem(key).includes('type')){
-//         dataArr.push(JSON.parse(localStorage.getItem(key)));
+for(let key in localStorage) {
+    if(localStorage.getItem(key) == null) continue;
+    if(localStorage.getItem(key).includes('question') && localStorage.getItem(key).includes('type')){
+        dataArr.push(JSON.parse(localStorage.getItem(key)));
         
-//     }
-// }
+    }
+}
+
+dataArr.reverse();
+
+let heading = localStorage.getItem('title');
+let description = localStorage.getItem('description');
+localStorage.clear();
+if(heading == 'null' || heading == null)header = 'Untitled Form';
+localStorage.setItem('title', heading);
+localStorage.setItem('description', description);
 
 
-// dataArr.forEach(element => {
-//     if(element.type == 'choice') {
-//         chooseQuestion(element.question, element.option1, element.option2);
-//         questionIndex++;
-//     }
-//     if(element.type == 'text') {
-//         textQuestion(element.question);
-//         questionIndex++;
-//     }
-//     if(element.type == 'date') {
-//         dateQuestion(element.question);
-//         questionIndex++;
-//     }
-//     if(element.type == 'rating') {
-//         rating(element.question);
-//         questionIndex++;
-//     }
-// });
+dataArr.forEach(element => {
+    if(element.type == 'choice') {
+        chooseQuestion(element.question, element.option1, element.option2);
+        questionIndex++;
+    }
+    if(element.type == 'text') {
+        textQuestion(element.question);
+        questionIndex++;
+    }
+    if(element.type == 'date') {
+        dateQuestion(element.question);
+        questionIndex++;
+    }
+    if(element.type == 'rating') {
+        rating(element.question);
+        questionIndex++;
+    }
+});
+
+makeItDraggable();
+
+function makeItDraggable (){
+    let draggedItem = null;
+    questionArea.addEventListener('dragstart', function (e) {
+        draggedItem = e.target;
+        // Set the data transfer object
+        e.dataTransfer.setData('text/plain', draggedItem);
+    });
+
+    // Add dragover event listener to the list
+    questionArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+    });
+
+    // Add drop event listener to the list
+    questionArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        const parentElement = e.target.closest('.for-drag');
+        parentElement.insertAdjacentElement('afterend',draggedItem);
+    });
+}
 
 function chooseQuestion(quesitonTitle = 'Question', option1 = 'Option-1', option2 = 'Option-2'){
     const newQuestion = document.createElement('div');
+    newQuestion.classList.add('for-drag');
+    newQuestion.setAttribute('draggable', 'true');
     const index = questionIndex;
     let html = `
     <div id="question-${index}" class="question-div">
@@ -344,6 +385,8 @@ const questionText = document.querySelector('.add-text');
 
 function textQuestion(quesitonTitle = 'Question'){
     const newQuestion = document.createElement('div');
+    newQuestion.classList.add('for-drag');
+    newQuestion.setAttribute('draggable', 'true');
     const index = questionIndex;
     let html = `
     <div id="question-${index}" class="question-div">
@@ -493,6 +536,8 @@ const questionDate = document.querySelector('.add-date');
 function dateQuestion(quesitonTitle = 'Question'){
     const index = questionIndex;
     const newQuestion = document.createElement('div');
+    newQuestion.classList.add('for-drag');
+    newQuestion.setAttribute('draggable', 'true');
     newQuestion.innerHTML = `
     <div id="question-${index}" class="question-div">
     <div class="place-change">
@@ -643,6 +688,8 @@ questionRating.addEventListener('click', function(){
 function rating(quesitonTitle = 'Quesiton'){
     const newQuestion = document.createElement('div');
     const index = questionIndex;
+    newQuestion.classList.add('for-drag');
+    newQuestion.setAttribute('draggable', 'true');
     newQuestion.innerHTML = `
     <div id="question-${index}" class="question-div">
     <div class="place-change">
