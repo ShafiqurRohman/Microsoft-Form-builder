@@ -175,8 +175,6 @@ function makeItDraggable (){
 
 function chooseQuestion(quesitonTitle = 'Question', option1 = 'Option-1', option2 = 'Option-2'){
     const newQuestion = document.createElement('div');
-    newQuestion.classList.add('for-drag');
-    newQuestion.setAttribute('draggable', 'true');
     const index = questionIndex;
     let html = `
     <div id="question-${index}" class="question-div">
@@ -254,9 +252,10 @@ function chooseQuestion(quesitonTitle = 'Question', option1 = 'Option-1', option
             let quesiton = document.querySelector(`#input-head-${index}`).value;
             let option1 = document.querySelector(`#input1-${index}`).value;
             let option2 = document.querySelector(`#input2-${index}`).value;
-
+            currentDom.classList.add('for-drag');
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.add('question-div-clean');
+            currentDom.setAttribute('draggable', 'true');
             classAdd.classList.remove('question-div');
 
             let defaultHtml = ` 
@@ -297,6 +296,9 @@ function chooseQuestion(quesitonTitle = 'Question', option1 = 'Option-1', option
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.remove('question-div-clean');
             classAdd.classList.add('question-div');
+            
+            currentDom.setAttribute('draggable', 'false');
+            currentDom.classList.remove('for-drag');
 
             currentDom.innerHTML= `
             <div class="place-change">
@@ -354,6 +356,7 @@ function chooseQuestion(quesitonTitle = 'Question', option1 = 'Option-1', option
                 option2: option2
             }
             localStorage.setItem(`question-${index}`, JSON.stringify(data));
+            
          }
 
          const copyContent = document.getElementById(`copy-content-${index}`);
@@ -385,8 +388,7 @@ const questionText = document.querySelector('.add-text');
 
 function textQuestion(quesitonTitle = 'Question'){
     const newQuestion = document.createElement('div');
-    newQuestion.classList.add('for-drag');
-    newQuestion.setAttribute('draggable', 'true');
+    
     const index = questionIndex;
     let html = `
     <div id="question-${index}" class="question-div">
@@ -443,6 +445,9 @@ function textQuestion(quesitonTitle = 'Question'){
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.add('question-div-clean');
             classAdd.classList.remove('question-div');
+
+            currentDom.classList.add('for-drag');
+            currentDom.setAttribute('draggable', 'true');
             
             let defaultHtml = ` 
             <div class="question-header">
@@ -469,6 +474,9 @@ function textQuestion(quesitonTitle = 'Question'){
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.remove('question-div-clean');
             classAdd.classList.add('question-div');
+
+            currentDom.classList.remove('for-drag');
+            currentDom.setAttribute('draggable', 'false');
 
             currentDom.innerHTML= `
             <div class="place-change">
@@ -592,6 +600,9 @@ function dateQuestion(quesitonTitle = 'Question'){
             classAdd.classList.add('question-div-clean');
             classAdd.classList.remove('question-div');
 
+            currentDom.classList.add('for-drag');
+            currentDom.setAttribute('draggable', 'true');
+
             let defaultHtml = ` 
             <div class="question-header">
                 <div class="question-title">
@@ -618,6 +629,9 @@ function dateQuestion(quesitonTitle = 'Question'){
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.remove('question-div-clean');
             classAdd.classList.add('question-div');
+
+            currentDom.classList.remove('for-drag');
+            currentDom.setAttribute('draggable', 'false');
 
             currentDom.innerHTML= `
             <div class="place-change">
@@ -778,6 +792,9 @@ function rating(quesitonTitle = 'Quesiton'){
             classAdd.classList.add('question-div-clean');
             classAdd.classList.remove('question-div');
 
+            currentDom.classList.add('for-drag');
+            currentDom.setAttribute('draggable', 'true');
+
             let defaultHtml = ` 
             <div class="question-header">
                 <div class="question-title">
@@ -808,6 +825,9 @@ function rating(quesitonTitle = 'Quesiton'){
             let classAdd = document.querySelector(`#question-${index}`);
             classAdd.classList.remove('question-div-clean');
             classAdd.classList.add('question-div');
+
+            currentDom.classList.remove('for-drag');
+            currentDom.setAttribute('draggable', 'false');
 
             currentDom.innerHTML= `
             <div class="place-change">
